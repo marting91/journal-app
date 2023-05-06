@@ -29,3 +29,28 @@ export const signInWithGoogle = async () => {
   }
 }
 
+export const registerUserWithEmail = async ({ email, password, displayName }) => {
+  try {
+    
+    const resp = await createUserWithEmailAndPassword( firebaseAuth, email, password );
+    const { uid, photoURL } = resp.user;
+    
+    // Updating displayName in Firebase
+    await updateProfile( firebaseAuth.currentUser, { displayName } );
+
+    return {
+      ok: true,
+      uid,
+      photoURL,
+      displayName,
+      email
+    }
+
+
+  } catch ( error ) {
+    return {
+      ok: false,
+      errorMessage: error.message
+    }
+  }
+}
