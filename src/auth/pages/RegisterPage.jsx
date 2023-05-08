@@ -5,7 +5,7 @@ import { Alert, Button, Grid, Link, TextField, Typography } from '@mui/material'
 
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
-import { logout, startCreatingUserWithEmail } from '../../store/auth';
+import { startCreatingUserWithEmail } from '../../store/auth';
 
 const formData = {
   email: '',
