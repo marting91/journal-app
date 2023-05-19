@@ -1,13 +1,18 @@
-import { SaveOutlined } from "@mui/icons-material"
-import { Button, Grid, TextField, Typography } from "@mui/material"
-import { ImageGallery } from "../components/ImageGallery"
-import { useForm } from "../../hooks/useForm"
-import { useSelector } from "react-redux"
-import { useMemo } from "react"
+import { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { SaveOutlined } from '@mui/icons-material';
+import { Button, Grid, TextField, Typography } from '@mui/material';
+import Swal from 'sweetalert2';
+
+import { ImageGallery } from '../components/ImageGallery';
+import { useForm } from '../../hooks/useForm';
+import { setActiveNote, startSavingNote } from '../../store/journal';
 
 export const NoteView = () => {
 
-  const { active: activeNote } = useSelector( state => state.journal );
+  const dispatch = useDispatch();
+  const { active: activeNote, messageSaved, isSaving } = useSelector( state => state.journal );
+
   const { body, title, date, onInputChange, formState } = useForm( activeNote );
 
   const dateString = useMemo(() => {
@@ -15,6 +20,23 @@ export const NoteView = () => {
 
     return newDate.toUTCString();
   }, [date]);
+
+  // Updating the active note with every change
+  useEffect(() => {
+    dispatch( setActiveNote( formState ) );
+  }, [ formState ]);
+
+  useEffect(() => {
+    if ( messageSaved.length > 0 ) {
+      Swal.fire( 'Note updated', messageSaved, 'success' );
+    }
+  
+  }, [ messageSaved ]);
+  
+
+  const onSaveNote = () => {
+    dispatch( startSavingNote() );
+  }
 
   return (
     <Grid 
@@ -28,7 +50,12 @@ export const NoteView = () => {
         <Typography fontSize={ 39 } fontWeight='light'>{ dateString }</Typography>
       </Grid>
       <Grid item>
-        <Button color="primary" sx={{ padding: 2 }}>
+        <Button 
+          color="primary"
+          sx={{ padding: 2 }}
+          onClick={ onSaveNote }
+          disabled={ isSaving }
+        >
           <SaveOutlined sx={{ fontSize: 30, mr: 1 }}/>
           Save
         </Button>
