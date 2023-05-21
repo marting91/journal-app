@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SaveOutlined, UploadOutlined } from '@mui/icons-material';
+import { DeleteOutline, SaveOutlined, UploadOutlined } from '@mui/icons-material';
 import { Button, Grid, IconButton, TextField, Typography } from '@mui/material';
 import Swal from 'sweetalert2';
 
 import { ImageGallery } from '../components/ImageGallery';
 import { useForm } from '../../hooks/useForm';
-import { setActiveNote, startSavingNote, startUploadingFiles } from '../../store/journal';
+import { setActiveNote, startDeletingNote, startSavingNote, startUploadingFiles } from '../../store/journal';
 
 export const NoteView = () => {
 
@@ -42,6 +42,18 @@ export const NoteView = () => {
 
   const onFileInputChange = ({ target }) => {
     dispatch( startUploadingFiles( target.files ) );
+  }
+
+  const onDelete = async () => {
+    const { isDismissed } = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'You are about to delete this note. This action cannot be undone',
+      icon: 'warning',
+      showCancelButton: true,
+    });
+
+    if ( isDismissed ) return;
+    dispatch( startDeletingNote() );
   }
 
   return (
@@ -108,6 +120,17 @@ export const NoteView = () => {
           value={ body }
           onChange={ onInputChange }
         />
+      </Grid>
+
+      <Grid container justifyContent="end">
+        <Button
+          onClick={ onDelete }
+          sx={{ mt: 2 }}
+          color="error"
+        >
+          <DeleteOutline />
+          Borrar
+        </Button>
       </Grid>
 
       <ImageGallery images={ activeNote.imageUrls }/>
