@@ -52,3 +52,17 @@ npm run dev
 ````
 
 5. Check in the terminal the URL where the site is being served (typically `http://localhost:5173/`) and open it in your browser.
+
+## Testing
+To run tests, use the following command:
+
+```bash
+npm test
+# or
+yarn test
+```
+
+## Credits
+This app is created as part of a learning project and uses the Giphy API for fetching GIFs.
+
+Feel free to explore the app and make it your own! Happy coding! 🚀
