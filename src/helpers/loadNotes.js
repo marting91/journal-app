@@ -1,5 +1,5 @@
-import { collection, getDocs } from "firebase/firestore/lite"
-import { firebaseDB } from "../firebase/config"
+import { collection, getDocs } from 'firebase/firestore/lite';
+import { firebaseDB } from '../firebase/config';
 
 export const loadNotes = async ( uid = '' ) => {
 
