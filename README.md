@@ -2,6 +2,8 @@
 
 Welcome to the Journal App, a web application that allows users to create, manage, and store their journal entries. This application provides a user-friendly interface for creating notes with titles, descriptions, and the ability to upload multiple images. It also includes a secure user authentication system powered by Firebase, offering options for both traditional registration and login, as well as the ability to sign in using a Google account.
 
+You can see a live demo at: https://mg-journal.netlify.app/
+
 ## Technologies Used
 
 - React: A JavaScript library for building user interfaces.
